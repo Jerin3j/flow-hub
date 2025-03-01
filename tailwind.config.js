@@ -17,7 +17,7 @@ export default {
         paw: "url('/pawCursor.svg'), auto",
       },
       fontFamily:{
-        "jolly" : ["Jolly Lodger", "serif"]
+        jolly : ["Jolly Lodger", "seriff"]
       }
     },
   },

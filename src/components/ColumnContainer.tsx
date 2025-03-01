@@ -1,33 +1,28 @@
-import { Column, Id, Task } from "../types";
+import { Column, Task } from "../types";
 import { DeleteIcon } from "../assets/DeleteIcon";
 import { CSS } from "@dnd-kit/utilities";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { useMemo, useState } from "react";
 import { PlusIcon } from "../assets/PlusIcon";
-import { TaskCard } from "../assets/TaskCard";
+import { TaskCard } from "./TaskCard";
+import { useDispatch } from "react-redux";
+import { addTaskState, selectTasksByColumnId } from "../redux/tasksSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { deleteColumn, updateColumn } from "../redux/columnSlice";
 
 interface Props {
   column: Column;
-  deleteColumn: (id: Id) => void;
-  updateColumn: (id: Id, title: string) => void;
-  addTask: (id: Id, title: string) => void;
   tasks: Task[];
-  deleteTask : (id: Id) => void;
-  updateTask : (id: Id, content: string) => void;
 }
 
-export const ColumnContainer = ({
-  column,
-  deleteColumn,
-  updateColumn,
-  addTask,
-  tasks,
-  deleteTask,
-  updateTask
-}: Props) => {
+export const ColumnContainer = ({column,} : Props) => {
+  const tasks = useSelector((state: RootState) =>
+    selectTasksByColumnId(state, column.id)
+  );
 
   const [editMode, setEditMode] = useState(false);
-   const taskId = useMemo(()=> tasks.map((task)=> task.id), [tasks])
+  const taskId = useMemo(() => tasks.map((task) => task.id), [tasks]);
   const {
     attributes,
     listeners,
@@ -48,6 +43,8 @@ export const ColumnContainer = ({
     transition,
     transform: CSS.Translate.toString(transform),
   };
+
+  const dispatch = useDispatch();
 
   if (isDragging) {
     return (
@@ -82,7 +79,9 @@ export const ColumnContainer = ({
               autoFocus
               className="text-white focus:border-rose-700 border bg-mainBgColor"
               value={column.title}
-              onChange={(e) => updateColumn(column.id, e.target.value)}
+              onChange={(e) =>
+                dispatch(updateColumn({ id: column.id, title: e.target.value }))
+              }
               onBlur={() => setEditMode(false)}
               onKeyDown={(e) => {
                 if (e.key !== "Enter") return;
@@ -91,19 +90,24 @@ export const ColumnContainer = ({
             />
           )}
         </div>
-        <div className="cursor-pointer" onClick={() => deleteColumn(column.id)}>
+        <div
+          className="cursor-pointer"
+          onClick={() => dispatch(deleteColumn({ id: column.id }))}
+        >
           <DeleteIcon />
         </div>
       </div>
       <div className="col-body flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
         <SortableContext items={taskId}>
-        {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} deleteTask={deleteTask} updateTask={updateTask}/>
-        ))}
+          {tasks.map((task) => (
+            <TaskCard key={task.id} task={task} />
+          ))}
         </SortableContext>
       </div>
       <button
-        onClick={() => addTask(column.id, column.title)}
+        onClick={() =>
+          dispatch(addTaskState({ columnId: column.id, title: column.title }))
+        }
         className="flex gap-2 border-columnBgColor items-center border-2 rounded-lg p-4 border-x-columnBgColor hover:bg-mainBgColor hover:text-rose-500 active:bg-black "
       >
         <PlusIcon />

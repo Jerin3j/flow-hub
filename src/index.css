@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,7 +8,6 @@
 html,
 body,
 #root {
-  @import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap');
     @apply bg-black text-white box-border;
 }
 
