@@ -8,7 +8,7 @@ type TaskState = {
 };
 
 const initialState: TaskState = {
-  tasks: [], // ✅ No unnecessary function here
+  tasks: [], 
 };
 
 export const taskSlice = createSlice({
@@ -24,8 +24,8 @@ export const taskSlice = createSlice({
       action: PayloadAction<{ columnId: Id; title: string }>
     ) => {
       const newTask: Task = {
-        id: Math.floor(Math.random() * 9000) + 1000, // Generate a random ID
-        columnId: action.payload.columnId, // ✅ Use a single columnId
+        id: Math.floor(Math.random() * 9000) + 1000, 
+        columnId: action.payload.columnId, 
         content: `Task ${state.tasks.length + 1}`,
       };
       state.tasks.push(newTask);

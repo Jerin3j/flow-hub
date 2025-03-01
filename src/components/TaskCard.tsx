@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Id, Task } from "../types";
+import { useState } from "react";
+import { Task } from "../types";
 import { DeleteIcon } from "../assets/DeleteIcon";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";

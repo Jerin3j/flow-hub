@@ -85,7 +85,7 @@ export const KanbanBoard = () => {
 
   return (
     <div className=" m-auto flex flex-col min-h-screen w-full items-center overflow-x-visible overflow-y-hidden px-[40px]">
-    <h1 className="font-jolly text-center mt-2 text-2xl sm:mt-1 sm:text-5xl">FlowHub</h1>
+    <h1 className="font-jolly text-center mt-2 text-2xl sm:mt-1 sm:text-5xl underline decoration-wavy"> FlowHub </h1>
       <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>
         <div className="m-auto flex flex-col sm:flex-row gap-4">
           <div className="flex gap-6">

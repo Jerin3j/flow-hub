@@ -12,7 +12,7 @@ body,
 }
 
 ::-webkit-scrollbar {
-    width: 1px;               /* width of the entire scrollbar */
+    width: 1px;          
   }
   ::-webkit-scrollbar-thumb {
     @apply bg-rose-950 rounded-md
@@ -20,4 +20,18 @@ body,
 
 .task-scrollbar > ::-webkit-scrollbar-thumb{
   @apply bg-sky-600 rounded-xl
+}
+
+@layer utilities{
+  @keyframes loading {
+    0%{
+      transform: translateX(-100%);
+    }
+    10%{
+      transform: translateX(100%);
+    }
+  }
+  .animate-loading{
+    animation: loading 0.8s ease infinite;
+  }
 }

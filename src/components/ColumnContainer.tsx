@@ -10,6 +10,7 @@ import { addTaskState, selectTasksByColumnId } from "../redux/tasksSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { deleteColumn, updateColumn } from "../redux/columnSlice";
+import { Dots } from "../assets/Dots";
 
 interface Props {
   column: Column;
@@ -65,8 +66,8 @@ export const ColumnContainer = ({column,} : Props) => {
     >
       <div className="col-head bg-mainBgColor text-base h-[60px] rounded-md rounded-b-none p-3 font-bold border-mainBgColor border-4 flex items-center justify-between cursor-paw">
         <div className="flex gap-2">
-          <div className="flex justify-center items-center bg-columnBgColor px-2 py-1 text-sm">
-            0
+          <div className="flex justify-center items-center fill-columnBgColor px-2 py-1 text-sm">
+            <Dots/>
           </div>
           {/* column title edit || display*/}
           {editMode != true ? (
