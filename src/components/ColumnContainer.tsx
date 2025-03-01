@@ -1,4 +1,4 @@
-import { Column, Task } from "../types";
+import { Column } from "../types";
 import { DeleteIcon } from "../assets/DeleteIcon";
 import { CSS } from "@dnd-kit/utilities";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
@@ -14,10 +14,9 @@ import { Dots } from "../assets/Dots";
 
 interface Props {
   column: Column;
-  tasks: Task[];
 }
 
-export const ColumnContainer = ({column,} : Props) => {
+export const ColumnContainer = ({column} : Props) => {
   const tasks = useSelector((state: RootState) =>
     selectTasksByColumnId(state, column.id)
   );

@@ -1,5 +1,5 @@
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
-import { Column, Id, Task } from "../types";
+import {  Id, Task } from "../types";
 import { RootState } from "./store";
 import { arrayMove } from "@dnd-kit/sortable";
 

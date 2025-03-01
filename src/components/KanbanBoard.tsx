@@ -14,7 +14,6 @@ import { moveTaskToAnotherColumn, moveTaskWithinColumn } from "../redux/tasksSli
 export const KanbanBoard = () => {
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
-  const [tasks, setTasks] = useState<Task[]>([]);
 
   // Get columns from Redux
   const columns = useSelector(selectColumns);
@@ -73,11 +72,13 @@ export const KanbanBoard = () => {
     const overTask = over.data.current?.type === "task";
   
     if (!activeTask) return;
-  
+
+    const overColumnId = overTask ? over.data.current?.task.columnId : overId;
+
     if (activeTask && overTask) {
       dispatch(moveTaskWithinColumn({ activeId, overId }));
     } else if (activeTask && over.data.current?.type === "column") {
-      dispatch(moveTaskToAnotherColumn({ activeId, newColumnId: overId }));
+      dispatch(moveTaskToAnotherColumn({ activeId, newColumnId: overColumnId }));
     }
   };
 
@@ -94,7 +95,6 @@ export const KanbanBoard = () => {
                 <ColumnContainer
                   key={col.id}
                   column={col}
-                  tasks={tasks.filter((task) => task.columnId === col.id)}
                 />
               ))}
             </SortableContext>
@@ -112,7 +112,6 @@ export const KanbanBoard = () => {
             {activeColumn && (
               <ColumnContainer
                 column={activeColumn}
-                tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
               />
             )}
             {activeTask && <TaskCard task={activeTask} />}

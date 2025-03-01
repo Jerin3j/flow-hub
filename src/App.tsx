@@ -1,7 +1,7 @@
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import { KanbanBoard } from './components/KanbanBoard';
 import './index.css';
-import { persistor, RootState, store } from './redux/store';
+import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { LoadingScreen } from './components/LoadingScreen';
 import { useState } from 'react';
