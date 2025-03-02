@@ -6,7 +6,6 @@ import { arrayMove } from "@dnd-kit/sortable";
 export type ColumnState = {
   columns: Column[];
 };
-
 const initialState: ColumnState = {
   columns: [],
 };
@@ -20,7 +19,7 @@ export const columnSlice = createSlice({
     createNewColumn: (state) => {
       const newColumn: Column = {
         id: Math.floor(Math.random() * 1000) + 100,
-        title: `Column ${state.columns.length + 1}`,
+        title: `Enter Column Name`,
       };
       state.columns.push(newColumn);
     },
@@ -37,9 +36,11 @@ export const columnSlice = createSlice({
         columnToUpdate.title = action.payload.title;
       }
     },
+
     setColumns: (state, action: PayloadAction<Column[]>) => {
       state.columns = action.payload;
     },
+    
     reorderColumns: (
       state,
       action: PayloadAction<{ activeId: Id; overId: Id }>

@@ -1,10 +1,10 @@
 import { Provider } from 'react-redux';
 import { KanbanBoard } from './components/KanbanBoard';
-import './index.css';
 import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { LoadingScreen } from './components/LoadingScreen';
 import { useState } from 'react';
+import './index.css';
 
 function App() {
 

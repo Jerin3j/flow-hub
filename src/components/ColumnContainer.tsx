@@ -17,9 +17,8 @@ interface Props {
 }
 
 export const ColumnContainer = ({column} : Props) => {
-  const tasks = useSelector((state: RootState) =>
-    selectTasksByColumnId(state, column.id)
-  );
+  
+  const tasks = useSelector((state: RootState) => selectTasksByColumnId(state, column.id));
 
   const [editMode, setEditMode] = useState(false);
   const taskId = useMemo(() => tasks.map((task) => task.id), [tasks]);
@@ -55,6 +54,7 @@ export const ColumnContainer = ({column} : Props) => {
     );
   }
 
+  console.log("current tasks", tasks)
   return (
     <div
       style={style}
@@ -68,7 +68,6 @@ export const ColumnContainer = ({column} : Props) => {
           <div className="flex justify-center items-center fill-columnBgColor px-2 py-1 text-sm">
             <Dots/>
           </div>
-          {/* column title edit || display*/}
           {editMode != true ? (
             <h1 key={column.id} onClick={() => setEditMode(true)}>
               {column.title}

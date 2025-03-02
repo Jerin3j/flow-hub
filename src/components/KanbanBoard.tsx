@@ -18,6 +18,7 @@ export const KanbanBoard = () => {
   // Get columns from Redux
   const columns = useSelector(selectColumns);
   const dispatch = useDispatch();
+  console.log("redux columns", columns)
 
   // Memoized column IDs for sorting
   const columnIds = useMemo(() => columns.map((col) => col.id), [columns]);

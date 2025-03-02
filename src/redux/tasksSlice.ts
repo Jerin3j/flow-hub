@@ -2,6 +2,7 @@ import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import {  Id, Task } from "../types";
 import { RootState } from "./store";
 import { arrayMove } from "@dnd-kit/sortable";
+import { deleteColumn } from "./columnSlice";
 
 type TaskState = {
   tasks: Task[]; // Store multiple tasks
@@ -10,6 +11,7 @@ type TaskState = {
 const initialState: TaskState = {
   tasks: [], 
 };
+console.log("tasksSlice", initialState);
 
 export const taskSlice = createSlice({
   name: "tasks",
@@ -26,9 +28,9 @@ export const taskSlice = createSlice({
       const newTask: Task = {
         id: Math.floor(Math.random() * 9000) + 1000, 
         columnId: action.payload.columnId, 
-        content: `Task ${state.tasks.length + 1}`,
+        content: `Enter task`,
       };
-      state.tasks.push(newTask);
+      state.tasks = [...state.tasks, newTask];  
     },
 
     deleteTaskState: (state, action: PayloadAction<{ id: Id }>) => {
@@ -87,9 +89,16 @@ export const taskSlice = createSlice({
       }
     },
   },
+
+  extraReducers(builder) {
+    builder.addCase(deleteColumn, (state, action)=> {
+      state.tasks = state.tasks.filter(task => task.columnId !== action.payload.id);
+    })
+  },
 });
 
 export default taskSlice.reducer;
+
 export const {
   setTaskDetails,
   addTaskState,
@@ -101,9 +110,12 @@ export const {
 } = taskSlice.actions;
 
 export const selectTasksByColumnId = createSelector(
-  [
-    (state: RootState) => state.tasksReducer.tasks, // Get all tasks
-    (_state: RootState, columnId: Id) => columnId, // Get columnId as argument
-  ],
-  (tasks, columnId) => tasks.filter((task) => task.columnId === columnId)
+  (state: RootState) => state.tasksReducer.tasks,
+  (_state: RootState, columnId: Id) => columnId,
+  (tasks, columnId) => {
+    const filteredTasks = tasks.filter((task) => task.columnId === columnId);
+    console.log(`Tasks for column ${columnId}:`, filteredTasks);
+    return filteredTasks;
+  }
 );
+
